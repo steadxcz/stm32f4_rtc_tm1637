@@ -1,0 +1,28 @@
+--cpu=Cortex-M4.fp.sp
+"rtc_tm1637\startup_stm32f407xx.o"
+"rtc_tm1637\main.o"
+"rtc_tm1637\stm32f4xx_it.o"
+"rtc_tm1637\stm32f4xx_hal_msp.o"
+"rtc_tm1637\stm32_tm1637.o"
+"rtc_tm1637\stm32f4xx_hal_rtc.o"
+"rtc_tm1637\stm32f4xx_hal_rtc_ex.o"
+"rtc_tm1637\stm32f4xx_hal_rcc.o"
+"rtc_tm1637\stm32f4xx_hal_rcc_ex.o"
+"rtc_tm1637\stm32f4xx_hal_flash.o"
+"rtc_tm1637\stm32f4xx_hal_flash_ex.o"
+"rtc_tm1637\stm32f4xx_hal_flash_ramfunc.o"
+"rtc_tm1637\stm32f4xx_hal_gpio.o"
+"rtc_tm1637\stm32f4xx_hal_dma_ex.o"
+"rtc_tm1637\stm32f4xx_hal_dma.o"
+"rtc_tm1637\stm32f4xx_hal_pwr.o"
+"rtc_tm1637\stm32f4xx_hal_pwr_ex.o"
+"rtc_tm1637\stm32f4xx_hal_cortex.o"
+"rtc_tm1637\stm32f4xx_hal.o"
+"rtc_tm1637\stm32f4xx_hal_exti.o"
+"rtc_tm1637\stm32f4xx_hal_tim.o"
+"rtc_tm1637\stm32f4xx_hal_tim_ex.o"
+"rtc_tm1637\system_stm32f4xx.o"
+--strict --scatter "rtc_tm1637\rtc_tm1637.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "rtc_tm1637.map" -o rtc_tm1637\rtc_tm1637.axf
