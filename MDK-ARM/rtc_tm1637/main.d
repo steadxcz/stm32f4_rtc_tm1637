@@ -31,3 +31,4 @@ rtc_tm1637\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 rtc_tm1637\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h
 rtc_tm1637\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h
 rtc_tm1637\main.o: ../Core/Inc/stm32_tm1637.h
+rtc_tm1637\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

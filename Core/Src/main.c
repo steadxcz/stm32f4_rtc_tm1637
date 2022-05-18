@@ -20,6 +20,26 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32_tm1637.h"
+#include <stdio.h>
+#define ITM_Port8(n)    (*((volatile unsigned char *)(0xE0000000+4*n)))
+#define ITM_Port16(n)   (*((volatile unsigned short*)(0xE0000000+4*n)))
+#define ITM_Port32(n)   (*((volatile unsigned long *)(0xE0000000+4*n)))
+#define DEMCR           (*((volatile unsigned long *)(0xE000EDFC)))
+#define TRCENA          0x01000000
+
+
+struct __FILE { int handle; /* Add whatever you need here */ };
+FILE __stdout;
+FILE __stdin;
+
+int fputc(int ch, FILE *f) {
+   if (DEMCR & TRCENA) {
+
+while (ITM_Port32(0) == 0){;};
+    ITM_Port8(0) = ch;
+  }
+  return(ch);
+}
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -116,18 +136,28 @@ int main(void)
     /* USER CODE END WHILE */
 		HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN); // RTC_FORMAT_BIN , RTC_FORMAT_BCD
 		HAL_RTC_GetDate(&hrtc, &sDate, FORMAT_BIN);
-    //snprintf(trans_str, 8, "Time %d:%d:%d\n", sTime.Hours, sTime.Minutes, sTime.Seconds);
+    
     fx = sTime.Hours*100;
 		fx+=sTime.Minutes;
 		tm1637DisplayDecimal(fx, sTime.Seconds%2==1 ? 1 : 0);
-		HAL_Delay(100);
+		HAL_Delay(10);
 		if(!HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_3)){
-			sTime.Hours = 7;
-  sTime.Minutes = 16;
-  sTime.Seconds = 0;
+			if(sTime.Minutes == 59){
+				sTime.Minutes = 0;
+			} else sTime.Minutes +=1;
+      sTime.Seconds = 0;
 			HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-			HAL_Delay(500);
+			HAL_Delay(50);
 		}
+		if(!HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_4)){
+      if(sTime.Hours==24){
+				sTime.Hours = 0;
+			} else sTime.Hours +=1;
+      sTime.Seconds = 0;
+			HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
+			HAL_Delay(50);
+		}
+		printf("test");
 	
     
     /* USER CODE BEGIN 3 */
@@ -221,9 +251,9 @@ static void MX_RTC_Init(void)
   //  Error_Handler();
   //}
   DateToUpdate.WeekDay = RTC_WEEKDAY_WEDNESDAY;
-  DateToUpdate.Month = RTC_MONTH_FEBRUARY;
-  DateToUpdate.Date = 20;
-  DateToUpdate.Year = 19;
+  DateToUpdate.Month = RTC_MONTH_MAY;
+  DateToUpdate.Date = 18;
+  DateToUpdate.Year = 22;
   /* USER CODE END RTC_Init 2 */
 
 }
