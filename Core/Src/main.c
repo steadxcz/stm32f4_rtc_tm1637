@@ -147,7 +147,7 @@ int main(void)
 			} else sTime.Minutes +=1;
       sTime.Seconds = 0;
 			HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-			HAL_Delay(50);
+			HAL_Delay(100);
 		}
 		if(!HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_4)){
       if(sTime.Hours==24){
@@ -155,7 +155,7 @@ int main(void)
 			} else sTime.Hours +=1;
       sTime.Seconds = 0;
 			HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-			HAL_Delay(50);
+			HAL_Delay(100);
 		}
 		printf("test");
 	
@@ -276,12 +276,18 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
-
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4|GPIO_PIN_5, GPIO_PIN_RESET);
   /*Configure GPIO pins : PE3 PE4 */
   GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+	
+ GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PA6 PA7 */
   GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
